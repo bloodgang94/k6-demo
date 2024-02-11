@@ -1,13 +1,13 @@
-const path = require('path')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const CopyPlugin = require('copy-webpack-plugin')
-const GlobEntries = require('webpack-glob-entries')
-const Dotenv = require('dotenv-webpack')
-const webpack = require('webpack')
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const GlobEntries = require('webpack-glob-entries');
+const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'production',
-  entry: GlobEntries('./src/test/*test*.ts'),
+  entry: GlobEntries('./src/test/*.ts'),
   output: {
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'commonjs',
@@ -47,15 +47,10 @@ module.exports = {
     // Copy assets to the destination folder
     // see `src/post-file-test.ts` for an test example using an asset
     new CopyPlugin({
-      patterns: [
-        {
-          from: path.resolve(__dirname, 'assets'),
-          noErrorOnMissing: true,
-        },
-      ],
+      patterns: [{ from: './src/assets', to: 'assets' }],
     }),
   ],
   target: 'web',
   externals: /^(k6|https?\:\/\/)(\/.*)?/,
   devtool: 'source-map',
-}
+};

@@ -42,8 +42,11 @@ services:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_BASIC_ENABLED=false
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
       - NODE_OPTIONS=--openssl-legacy-provider
     volumes:
+      - ./dashboards:/var/lib/grafana/dashboards
+      - ./grafana-dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
       - ./grafana-datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
 
   k6:
@@ -54,7 +57,9 @@ services:
       - "6565:6565"
     environment:
       - K6_OUT=influxdb=http://influxdb:8086/k6
+    env_file:
+      - .env
     volumes:
-      - ./dist:/scripts
+      - ./dist:/dist
 volumes:
   chronograf-storage:
