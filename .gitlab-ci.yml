@@ -1,0 +1,7 @@
+variables:
+  LOAD_HOST: 'https://test-api.k6.io'
+  TEST_PATH: dist/test.js
+
+include:
+  - project: global/templates
+    file: tests/load/k6.yml
